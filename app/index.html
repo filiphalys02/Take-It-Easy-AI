@@ -49,7 +49,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:1fr minmax(200px,22v
 }
 /* plansza gracza, który ma ruch, jest pełnego rozmiaru; druga się zmniejsza */
 .panel:not(.turn){transform:scale(.8);opacity:.72}
-body.over .panel{transform:none;opacity:1}
+body.is-over .panel{transform:none;opacity:1}
 .panel.user{--accent:var(--user)} .panel.ai{--accent:var(--ai)}
 .panel.turn{box-shadow:0 0 0 1px var(--accent),0 0 28px -4px var(--accent),0 10px 30px rgba(0,0,0,.35)}
 .phead{flex:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:.4vh}
@@ -75,9 +75,10 @@ body.over .panel{transform:none;opacity:1}
 .dots span{animation:blink 1.2s infinite both}.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
 @keyframes blink{0%,80%,100%{opacity:.15}40%{opacity:1}}
 .over{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(96%,440px);
+  position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,460px);
   background:linear-gradient(180deg,#16233d,#0e1729);border:1px solid var(--gold);border-radius:22px;
-  padding:3vh 1.6vw;box-shadow:0 0 60px -10px rgba(251,191,36,.45),0 24px 60px rgba(0,0,0,.6);
+  padding:clamp(18px,3.5vh,40px) clamp(14px,2vw,32px);
+  box-shadow:0 0 0 100vmax rgba(5,10,20,.72),0 0 60px -10px rgba(251,191,36,.45),0 24px 60px rgba(0,0,0,.6);
   animation:rise .45s cubic-bezier(.2,.9,.3,1.2);
 }
 .over[hidden]{display:none}
@@ -159,7 +160,7 @@ button,.slot{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .score small{font-size:12px}
   .boardwrap{flex:none;width:100%;align-self:center;transition:width .45s cubic-bezier(.3,.8,.3,1)}
   .panel:not(.turn) .boardwrap{width:70%}
-  body.over .panel .boardwrap{width:100%}
+  body.is-over .panel .boardwrap{width:100%}
   .boardwrap svg{height:auto}
   .chips{min-height:0;max-height:none;margin-top:8px;gap:6px}
   .chip{font-size:12px}
@@ -393,7 +394,7 @@ function render() {
   else st.innerHTML = '';
 
   $('over').hidden = !over;
-  document.body.classList.toggle('over', over);
+  document.body.classList.toggle('is-over', over);
   if (over) {
     const h = S.human.score, a = S.ai.score, diff = Math.abs(h - a);
     const v = $('verdict');

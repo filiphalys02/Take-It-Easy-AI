@@ -19,7 +19,7 @@ body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
 /* ---------- nagłówek ---------- */
-header{flex:none;height:8vh;min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 2.2vw}
+header{flex:none;height:7vh;min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 2.2vw}
 .brand{font-weight:800;letter-spacing:.2em;font-size:clamp(18px,3.2vh,32px);color:var(--gold);line-height:1}
 .brand small{display:block;margin-top:.55em;font-weight:500;letter-spacing:.12em;color:var(--muted);font-size:.4em}
 .hright{display:flex;align-items:center;gap:1.6vw}
@@ -27,22 +27,29 @@ header{flex:none;height:8vh;min-height:48px;display:flex;align-items:center;just
 .lang button{cursor:pointer;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:800;letter-spacing:.12em;
   font-size:clamp(11px,1.7vh,15px);padding:.45em .9em;transition:background .15s,color .15s}
 .lang button:hover{color:var(--text)}
+.rules{color:var(--muted);text-decoration:none;font-weight:800;letter-spacing:.12em;font-size:clamp(11px,1.7vh,15px);
+  border:1px solid var(--edge);border-radius:99px;padding:.45em .9em;background:var(--panel);transition:color .15s,border-color .15s}
+.rules:hover{color:var(--gold);border-color:var(--gold)}
 .lang button.on{background:var(--gold);color:#1b1300}
 .turn{color:var(--muted);font-size:clamp(13px,2.2vh,22px);letter-spacing:.06em}
 .turn b{color:var(--text);font-size:1.5em;margin:0 .15em}
 /* ---------- wylosowany kafelek ---------- */
-#top{flex:none;height:22vh;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.caption{font-size:clamp(10px,1.45vh,14px);letter-spacing:.32em;color:var(--muted);text-transform:uppercase;margin-bottom:.4vh}
-#bigTile{height:calc(100% - 2.6vh);display:flex;align-items:center;justify-content:center}
+#top{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.caption{font-size:clamp(10px,1.45vh,14px);letter-spacing:.32em;color:var(--muted);text-transform:uppercase;margin-bottom:1vh}
+#bigTile{height:min(24vh,17vw);min-height:90px;display:flex;align-items:center;justify-content:center}
 #bigTile svg{height:100%;width:auto;filter:drop-shadow(0 .8vh 2vh rgba(251,191,36,.28))}
 .finished{color:var(--gold);font-weight:800;letter-spacing:.25em;font-size:clamp(18px,3vh,30px)}
 /* ---------- plansze ---------- */
-main{flex:1;min-height:0;display:grid;grid-template-columns:1fr minmax(200px,25vw) 1fr;gap:1.4vw;padding:0 2.2vw}
+main{flex:1;min-height:0;display:grid;grid-template-columns:1fr minmax(200px,22vw) 1fr;gap:1.4vw;padding:0 2.2vw}
 .panel{
   min-height:0;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--edge);
   border-top:3px solid var(--accent);border-radius:20px;padding:1vh 1.3vw 1.1vh;
-  box-shadow:0 10px 30px rgba(0,0,0,.35);transition:box-shadow .25s, border-color .25s;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  transition:transform .5s cubic-bezier(.3,.8,.3,1), opacity .5s, box-shadow .25s, border-color .25s;
 }
+/* plansza gracza, który ma ruch, jest pełnego rozmiaru; druga się zmniejsza */
+.panel:not(.turn){transform:scale(.8);opacity:.72}
+body.over .panel{transform:none;opacity:1}
 .panel.user{--accent:var(--user)} .panel.ai{--accent:var(--ai)}
 .panel.turn{box-shadow:0 0 0 1px var(--accent),0 0 28px -4px var(--accent),0 10px 30px rgba(0,0,0,.35)}
 .phead{flex:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:.4vh}
@@ -61,8 +68,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:1fr minmax(200px,25v
 .nochip{color:var(--muted);font-size:clamp(10px,1.5vh,13px);letter-spacing:.04em}
 /* ---------- środek ---------- */
 .center{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:0}
-.vs{font-size:clamp(40px,11vh,110px);font-weight:900;letter-spacing:.06em;color:#17233b;line-height:1}
-.status{margin-top:1.2vh;min-height:9vh}
+.status{margin-top:1.6vh;min-height:9vh}
 .st-title{font-weight:800;font-size:clamp(16px,3vh,30px);letter-spacing:.06em}
 .st-title.user{color:var(--user)} .st-title.ai{color:var(--ai)}
 .st-sub{margin-top:.8vh;color:var(--muted);font-size:clamp(11px,1.7vh,16px);line-height:1.5}
@@ -93,7 +99,7 @@ button#again{
 button#again:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.07);box-shadow:0 12px 30px -6px rgba(251,191,36,.9)}
 button#again:active{transform:scale(.98)}
 /* ---------- talia ---------- */
-#bottom{flex:none;height:24vh;min-height:150px;padding:1.2vh 2.2vw 1.6vh}
+#bottom{flex:none;height:19vh;min-height:120px;padding:1vh 2.2vw 1.4vh}
 .deck{height:100%;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--edge);border-radius:20px;padding:.8vh 1.3vw}
 .deckhead{flex:none;display:flex;justify-content:space-between;align-items:baseline;color:var(--muted);font-size:clamp(10px,1.5vh,14px);letter-spacing:.22em;text-transform:uppercase}
 .deckhead b{color:var(--text);font-size:1.25em;letter-spacing:.05em}
@@ -136,21 +142,24 @@ button,.slot{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .hright{gap:10px;margin-left:auto}
   .turn{font-size:13px}
   .lang button{font-size:12px;padding:.5em .85em}
+  .rules{font-size:12px;padding:.5em .85em}
   #top{height:auto;min-height:0;padding:2px 0 10px}
   .caption{font-size:10px;margin-bottom:4px}
   #bigTile{height:96px}
   .finished{font-size:20px}
   main{display:flex;flex-direction:column;gap:12px;width:100%;max-width:560px;margin:0 auto;padding:0 12px}
   .center{order:-1;min-height:0}
-  .vs{display:none}
   .status{margin:0 0 2px;min-height:0}
   .st-title{font-size:19px}
   .st-sub{font-size:13px;margin-top:4px}
   .panel{padding:10px 12px 12px;border-radius:16px}
+  .panel:not(.turn){transform:none;opacity:.85}
   .who{font-size:16px}
   .score b{font-size:30px}
   .score small{font-size:12px}
-  .boardwrap{flex:none}
+  .boardwrap{flex:none;width:100%;align-self:center;transition:width .45s cubic-bezier(.3,.8,.3,1)}
+  .panel:not(.turn) .boardwrap{width:70%}
+  body.over .panel .boardwrap{width:100%}
   .boardwrap svg{height:auto}
   .chips{min-height:0;max-height:none;margin-top:8px;gap:6px}
   .chip{font-size:12px}
@@ -178,17 +187,13 @@ button,.slot{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   <div class="brand">TAKE IT EASY<small data-i18n="subtitle"></small></div>
   <div class="hright">
     <div class="turn"><span data-i18n="turn"></span> <b id="turnNum">1</b> / <span id="turnTotal">19</span></div>
+    <a class="rules" id="rulesLink" target="_blank" rel="noopener noreferrer" data-i18n="rules"></a>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-lang="en">EN</button>
       <button type="button" data-lang="pl">PL</button>
     </div>
   </div>
 </header>
-
-<section id="top">
-  <div class="caption" data-i18n="drawn"></div>
-  <div id="bigTile"></div>
-</section>
 
 <main>
   <section class="panel user" id="panelUser">
@@ -201,7 +206,10 @@ button,.slot{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   </section>
 
   <section class="center">
-    <div class="vs" id="vs">VS</div>
+    <div id="top">
+      <div class="caption" data-i18n="drawn"></div>
+      <div id="bigTile"></div>
+    </div>
     <div class="status" id="status"></div>
     <div class="over" id="over" hidden>
       <div class="over-title" data-i18n="gameOver"></div>
@@ -247,7 +255,7 @@ const prevCount = {human: 0, ai: 0};
 /* ---------- język ---------- */
 const I18N = {
   en: {
-    subtitle: 'BOARD GAME', turn: 'TURN', drawn: 'Drawn tile', you: 'YOU', net: 'NET', pts: 'PTS',
+    subtitle: 'BOARD GAME', rules: 'RULES', turn: 'TURN', drawn: 'Drawn tile', you: 'YOU', net: 'NET', pts: 'PTS',
     clickHint: 'click an empty cell', gameOver: 'GAME OVER', playAgain: 'PLAY AGAIN', remaining: 'Remaining tiles',
     vertical: 'VERTICAL', noLines: 'no completed lines', yourMove: 'Your move',
     yourMoveHint: 'Click an empty cell on your board.<br>Hover to preview the tile.',
@@ -259,7 +267,7 @@ const I18N = {
     errors: {notYourTurn: 'It is not your turn', notNetTurn: 'The net is not to move now', cellTaken: 'This cell is taken', badCell: 'Invalid cell'},
   },
   pl: {
-    subtitle: 'GRA PLANSZOWA', turn: 'TURA', drawn: 'Wylosowany kafelek', you: 'TY', net: 'SIEĆ', pts: 'PKT',
+    subtitle: 'GRA PLANSZOWA', rules: 'ZASADY', turn: 'TURA', drawn: 'Wylosowany kafelek', you: 'TY', net: 'SIEĆ', pts: 'PKT',
     clickHint: 'kliknij wolne pole', gameOver: 'KONIEC GRY', playAgain: 'ZAGRAJ PONOWNIE', remaining: 'Pozostałe kafelki',
     vertical: 'PIONOWO', noLines: 'brak ukończonych linii', yourMove: 'Twój ruch',
     yourMoveHint: 'Kliknij wolne pole na swojej planszy.<br>Po najechaniu zobaczysz podgląd kafelka.',
@@ -274,9 +282,14 @@ const I18N = {
 let LANG = 'en';
 try { const s = localStorage.getItem('tie-lang'); if (s in I18N) LANG = s; } catch (_) {}
 const t = k => I18N[LANG][k];
+const RULES_URL = {
+  en: 'https://en.wikipedia.org/wiki/Take_It_Easy_(game)',
+  pl: 'https://pl.wikipedia.org/wiki/Take_it_Easy',
+};
 
 function applyLang() {
   document.documentElement.lang = LANG;
+  $('rulesLink').href = RULES_URL[LANG];
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.lang === LANG));
   if (STATE) { bigKey = null; render(); }
@@ -378,9 +391,9 @@ function render() {
   if (S.phase === 'human') st.innerHTML = `<div class="st-title user">${t('yourMove')}</div><div class="st-sub">${t(TOUCH ? 'yourMoveHintTouch' : 'yourMoveHint')}</div>`;
   else if (S.phase === 'ai') st.innerHTML = `<div class="st-title ai">${t('netThinks')}<span class="dots"><span>.</span><span>.</span><span>.</span></span></div><div class="st-sub">${aiReady ? t('netHint') : t('netLoading')}</div>`;
   else st.innerHTML = '';
-  $('vs').style.display = over ? 'none' : '';
 
   $('over').hidden = !over;
+  document.body.classList.toggle('over', over);
   if (over) {
     const h = S.human.score, a = S.ai.score, diff = Math.abs(h - a);
     const v = $('verdict');
